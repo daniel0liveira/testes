@@ -6,10 +6,19 @@ const http = require('http');
 
 const server = http.createServer(app);
 
-const port = normalizePort(process.env.PORT || 3000);
+const port = normalizePort(process.env.OPENSHIFT_NODEJS_PORT || '8080');
+
+var ip = process.env.OPENSHIFT_NODEJS_IP;
+        if (typeof ip === "undefined") {
+            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
+            //  allows us to run/test the app locally.
+            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
+            ip = "127.0.0.1";
+        };
+
 app.set('port', port);
 
-server.listen(port,'127.0.0.1');
+server.listen(port,ip);
 
 server.on('listening', onListening);
 
