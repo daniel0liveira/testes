@@ -7,13 +7,16 @@ var db = require('./db');
 
 const server = http.createServer(app);
 
-const port = normalizePort(process.env.PORT || 3000);
+
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+
 app.set('port', port);
 
 db.obterUsuario('daniel', 'asss', 'sassa').then((data) => console.log(data)).catch((e) => console.log(e));
 
 
-server.listen(port, '127.0.0.1');
+server.listen(port, ip);
 
 server.on('listening', onListening);
 
