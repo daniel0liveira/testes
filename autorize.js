@@ -3,7 +3,7 @@ global.SALT_KEY = 'ffed98b4978eb672a14de2deb00a205f94027a0f28165047af237dfa4eab4
 const jwt = require('jsonwebtoken');
 
 
-exports.generateToken = async(data)=> {
+exports.generateToken = async (data)=> {
     return jwt.sign(data,global.SALT_KEY, {expiresIn : '1d'});
 }
 
